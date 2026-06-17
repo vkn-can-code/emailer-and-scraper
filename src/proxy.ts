@@ -39,9 +39,9 @@ function applyRateLimit(ip: string): boolean {
   return true; // Allowed
 }
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   // 1. Rate Limiting Firewall
-  const ip = request.headers.get('x-forwarded-for') || request.ip || '127.0.0.1';
+  const ip = request.headers.get('x-forwarded-for') || '127.0.0.1';
   
   // Apply rate limit
   const isAllowed = applyRateLimit(ip);
