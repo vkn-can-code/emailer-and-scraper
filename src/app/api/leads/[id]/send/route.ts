@@ -2,19 +2,23 @@ import { NextRequest, NextResponse } from 'next/server';
 export const dynamic = 'force-dynamic';
 import prisma from '@/lib/db/db';
 import nodemailer from 'nodemailer';
+import { getUserFromRequest } from '@/lib/auth';
 
 export async function POST(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const user = await getUserFromRequest(req);
+    if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
     const { id } = await params;
     
     if (!id || typeof id !== 'string') {
       return NextResponse.json({ error: 'Invalid ID parameter' }, { status: 400 });
     }
     
-    const senderName = 'Admin';
+    const senderName = user.username;
 
     const lead: any = await prisma.channel.findUnique({
       where: { id }
@@ -22,6 +26,10 @@ export async function POST(
 
     if (!lead || !lead.email) {
       return NextResponse.json({ error: 'Lead or email not found' }, { status: 404 });
+    }
+
+    if (user.role !== 'ADMIN' && lead.userId !== user.id) {
+       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
     const subject = lead.emailSubject || 'Outreach';

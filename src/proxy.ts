@@ -61,9 +61,8 @@ export function proxy(request: NextRequest) {
   // Protected API routes
   if (path.startsWith('/api/') && !path.startsWith('/api/auth/')) {
     const sessionCookie = request.cookies.get('admin-session')?.value;
-    const expectedSecret = process.env.ADMIN_SESSION_SECRET || 'fallback_secret_do_not_use';
     
-    if (sessionCookie !== expectedSecret) {
+    if (!sessionCookie) {
       return new NextResponse(JSON.stringify({ error: 'Unauthorized' }), {
         status: 401,
         headers: {

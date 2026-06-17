@@ -1,11 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server';
+import prisma from '@/lib/db/db';
 
 export async function GET(req: NextRequest) {
-  const sessionCookie = req.cookies.get('admin-session')?.value;
-  const expectedSecret = process.env.ADMIN_SESSION_SECRET || 'fallback_secret_do_not_use';
+  const sessionToken = req.cookies.get('admin-session')?.value;
   
-  if (sessionCookie === expectedSecret) {
-    return NextResponse.json({ authenticated: true });
+  if (!sessionToken) {
+    return NextResponse.json({ authenticated: false }, { status: 401 });
+  }
+
+  try {
+    const user = await prisma.user.findUnique({
+      where: { sessionToken }
+    });
+
+    if (user) {
+      return NextResponse.json({ 
+        authenticated: true,
+        user: { username: user.username, role: user.role }
+      });
+    }
+  } catch (err) {
+    console.error(err);
   }
   
   return NextResponse.json({ authenticated: false }, { status: 401 });

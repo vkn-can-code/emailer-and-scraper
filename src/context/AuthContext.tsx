@@ -5,7 +5,7 @@ import { useRouter, usePathname } from 'next/navigation';
 
 interface AuthContextType {
   isAuthenticated: boolean;
-  user: { username: string } | null;
+  user: { username: string; role?: string } | null;
   login: (username: string, password: string) => Promise<boolean>;
   logout: () => Promise<void>;
 }
@@ -14,7 +14,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [user, setUser] = useState<{ username: string } | null>(null);
+  const [user, setUser] = useState<{ username: string; role?: string } | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
   const pathname = usePathname();
@@ -24,13 +24,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       try {
         const res = await fetch('/api/auth/check');
         if (res.ok) {
+          const data = await res.json();
           setIsAuthenticated(true);
-          const storedAuth = localStorage.getItem('auth_session');
-          if (storedAuth) {
-            setUser(JSON.parse(storedAuth).user);
-          } else {
-            setUser({ username: 'admin' });
-          }
+          setUser(data.user);
+          localStorage.setItem('auth_session', JSON.stringify({ user: data.user }));
         } else {
           setIsAuthenticated(false);
           setUser(null);
@@ -61,10 +58,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       });
       
       if (res.ok) {
-        const userData = { username };
+        const data = await res.json();
         setIsAuthenticated(true);
-        setUser(userData);
-        localStorage.setItem('auth_session', JSON.stringify({ user: userData }));
+        setUser(data.user);
+        localStorage.setItem('auth_session', JSON.stringify({ user: data.user }));
         router.push('/dashboard');
         return true;
       }

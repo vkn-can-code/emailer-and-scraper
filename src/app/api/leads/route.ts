@@ -1,16 +1,19 @@
-// Leads API Route - Updated with YouTube metrics
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db/db';
 import { fetchChannelData } from '@/lib/youtube';
 import { generateOutreachEmail } from '@/lib/ai';
 import { formatCompactNumber, parseCompactNumber, calculateEngagementRatio, calculateAverageViews } from '@/lib/metrics';
+import { getUserFromRequest } from '@/lib/auth';
 
 export async function GET(req: NextRequest) {
   try {
+    const user = await getUserFromRequest(req);
+    if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
     const { searchParams } = new URL(req.url);
     const dateStr = searchParams.get('date');
     
-    const where: any = {};
+    const where: any = { userId: user.id };
     if (dateStr) {
       const parsedDate = Date.parse(dateStr);
       if (isNaN(parsedDate)) {
@@ -41,6 +44,9 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
+    const user = await getUserFromRequest(req);
+    if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
     const body = await req.json();
     if (!body || typeof body !== 'object') {
       return NextResponse.json({ error: 'Invalid payload structure' }, { status: 400 });
@@ -94,6 +100,7 @@ export async function POST(req: NextRequest) {
 
         const lead = await (prisma.channel as any).create({
           data: {
+            userId: user.id,
             name: channelData.name,
             handle: channelData.handle,
             avatar: channelData.avatar,
@@ -122,6 +129,5 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Failed to process bulk leads' }, { status: 500 });
   }
 }
-
 
 export const dynamic = 'force-dynamic';

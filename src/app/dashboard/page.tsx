@@ -15,7 +15,7 @@ export default function DashboardPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
   const { showToast } = useToast();
 
   const fetchLeads = useCallback(async (date: Date | null) => {
@@ -89,6 +89,23 @@ export default function DashboardPage() {
           >
             Sign Out
           </button>
+
+          {user?.role === 'ADMIN' && (
+            <>
+              <Link 
+                href="/dashboard/master"
+                className="text-[11px] font-bold text-purple-400 hover:text-purple-300 transition-colors uppercase tracking-[0.2em]"
+              >
+                Master Dashboard
+              </Link>
+              <Link 
+                href="/dashboard/users"
+                className="text-[11px] font-bold text-indigo-400 hover:text-indigo-300 transition-colors uppercase tracking-[0.2em] mr-4"
+              >
+                Manage Users
+              </Link>
+            </>
+          )}
 
           <Link 
             href="/"
