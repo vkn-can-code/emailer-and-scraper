@@ -80,7 +80,7 @@ export default function LoginPage() {
 
         <div className="mt-8 pt-6 border-t border-white/5 text-center">
           <p className="text-zinc-600 text-xs">
-            Dev mode: <span className="text-zinc-400 font-mono">admin / password</span>
+            Default Admin: <span className="text-zinc-400 font-mono">admin / password123</span>
           </p>
         </div>
       </div>
