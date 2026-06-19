@@ -3,6 +3,7 @@ import OpenAI from 'openai';
 const openRouterKey = process.env.OPENROUTER_API_KEY;
 const openRouterUrl = "https://openrouter.ai/api/v1";
 
+// Default client for OpenRouter
 const openai = new OpenAI({
   apiKey: openRouterKey || "dummy-key-for-build",
   baseURL: openRouterUrl,
@@ -10,6 +11,12 @@ const openai = new OpenAI({
     "HTTP-Referer": "http://localhost:3000",
     "X-Title": "Email Generation App",
   }
+});
+
+// Client for Local LLM at periscope.developerlab.tech
+const localLlmClient = new OpenAI({
+  apiKey: "local-dummy-key", // Local endpoints typically ignore this
+  baseURL: "https://periscope.developerlab.tech/v1",
 });
 
 export interface LeadContext {
@@ -28,8 +35,12 @@ Goal: Pitch YouTube Growth Agency services. Tone: Professional/Value-driven.
 Return JSON: {"subject": "...", "body": "..."}`;
 
   try {
-    const response = await openai.chat.completions.create({
-      model: requestedModel,
+    const isLocal = requestedModel === 'local/periscope';
+    const client = isLocal ? localLlmClient : openai;
+    const actualModel = isLocal ? 'local-model' : requestedModel; // Many local backends ignore model string
+
+    const response = await client.chat.completions.create({
+      model: actualModel,
       messages: [{ role: "user", content: prompt }],
       response_format: { type: "json_object" },
       max_tokens: 400,

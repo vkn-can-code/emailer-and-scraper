@@ -304,6 +304,7 @@ export default function Home() {
                     className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-xs text-white focus:outline-none focus:border-indigo-500 transition-all cursor-pointer"
                   >
                     <option value="openrouter/auto" className="bg-zinc-900 text-white font-bold">OpenRouter (Auto Routing)</option>
+                    <option value="local/periscope" className="bg-indigo-900 text-white font-bold">Local LLM (Periscope)</option>
                     <option value="openai/gpt-5.5" className="bg-zinc-900 text-white">GPT-5.5 Standard</option>
                     <option value="openai/gpt-5.5-mini" className="bg-zinc-900 text-white">GPT-5.5 Mini</option>
                     <option value="openai/gpt-5.4" className="bg-zinc-900 text-white">GPT-5.4 Standard</option>
