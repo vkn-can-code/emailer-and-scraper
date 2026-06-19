@@ -38,5 +38,8 @@
     "pdfkit": "^0.18.0",
     "tailwindcss": "^4",
     "typescript": "^5.9.3"
+  },
+  "prisma": {
+    "seed": "npx tsx prisma/seed.ts"
   }
 }
