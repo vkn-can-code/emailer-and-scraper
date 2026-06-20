@@ -13,10 +13,10 @@ const openai = new OpenAI({
   }
 });
 
-// Client for Local LLM at periscope.developerlab.tech
+// Client for Local LLM (e.g. Ollama)
 const localLlmClient = new OpenAI({
   apiKey: "local-dummy-key", // Local endpoints typically ignore this
-  baseURL: "https://periscope.developerlab.tech/v1",
+  baseURL: "http://localhost:11434/v1",
 });
 
 export interface LeadContext {
@@ -35,7 +35,7 @@ Goal: Pitch YouTube Growth Agency services. Tone: Professional/Value-driven.
 Return JSON: {"subject": "...", "body": "..."}`;
 
   try {
-    const isLocal = requestedModel === 'local/periscope';
+    const isLocal = requestedModel === 'local/ollama';
     const client = isLocal ? localLlmClient : openai;
     const actualModel = isLocal ? 'local-model' : requestedModel; // Many local backends ignore model string
 
