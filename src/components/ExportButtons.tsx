@@ -89,7 +89,7 @@ export default function ExportButtons({ channels, selectedDate }: ExportButtonsP
       <button 
         onClick={exportToPDF}
         disabled={channels.length === 0}
-        className="flex items-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/10 px-4 py-2 rounded-lg text-sm font-bold transition-all"
+        className="flex items-center gap-2 bg-white hover:bg-slate-100 text-slate-900 border border-slate-200 px-4 py-2 rounded-lg text-sm font-bold transition-all"
       >
         <svg className="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
         PDF
@@ -97,7 +97,7 @@ export default function ExportButtons({ channels, selectedDate }: ExportButtonsP
       <button 
         onClick={exportToWord}
         disabled={channels.length === 0}
-        className="flex items-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/10 px-4 py-2 rounded-lg text-sm font-bold transition-all"
+        className="flex items-center gap-2 bg-white hover:bg-slate-100 text-slate-900 border border-slate-200 px-4 py-2 rounded-lg text-sm font-bold transition-all"
       >
         <svg className="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
         Word

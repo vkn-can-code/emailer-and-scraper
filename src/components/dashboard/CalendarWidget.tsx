@@ -69,9 +69,9 @@ export default function CalendarWidget({ onDateSelect, selectedDate }: CalendarW
           key={d}
           onClick={() => onDateSelect(isSelected ? null : date)}
           className={`h-10 w-10 flex items-center justify-center rounded-xl text-sm transition-all duration-300 relative group
-            ${isSelected ? 'font-extrabold text-white shadow-[0_0_15px_rgba(99,102,241,0.5)] scale-110 z-10' : 
-              isToday ? 'bg-white/5 text-indigo-400 font-bold border border-indigo-500/30' : 
-              'text-zinc-400 hover:bg-white/10 hover:text-white'}`}
+            ${isSelected ? 'font-extrabold text-slate-900 shadow-[0_0_15px_rgba(99,102,241,0.5)] scale-110 z-10' : 
+              isToday ? 'bg-white text-indigo-400 font-bold border border-indigo-500/30' : 
+              'text-slate-500 hover:bg-slate-100 hover:text-slate-900'}`}
         >
           {isSelected && (
              <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-xl -z-10"></div>
@@ -92,13 +92,13 @@ export default function CalendarWidget({ onDateSelect, selectedDate }: CalendarW
           <div className="relative" ref={monthRef}>
             <button 
               onClick={() => setShowMonthSelect(!showMonthSelect)}
-              className="text-lg font-bold text-white hover:text-indigo-400 transition-colors flex items-center gap-1"
+              className="text-lg font-bold text-slate-900 hover:text-indigo-400 transition-colors flex items-center gap-1"
             >
               {monthNames[viewDate.getMonth()]}
               <svg className={`w-4 h-4 transition-transform ${showMonthSelect ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
             {showMonthSelect && (
-              <div className="absolute top-full left-0 mt-3 w-44 bg-black/90 backdrop-blur-xl border border-white/10 rounded-2xl shadow-[0_0_40px_rgba(0,0,0,0.5)] z-50 py-2 animate-in fade-in slide-in-from-top-2">
+              <div className="absolute top-full left-0 mt-3 w-44 bg-slate-50/90 backdrop-blur-xl border border-slate-200 rounded-2xl shadow-[0_0_40px_rgba(0,0,0,0.5)] z-50 py-2 animate-in fade-in slide-in-from-top-2">
                 {monthNames.map((name, i) => (
                   <button
                     key={name}
@@ -106,7 +106,7 @@ export default function CalendarWidget({ onDateSelect, selectedDate }: CalendarW
                       setViewDate(new Date(viewDate.getFullYear(), i, 1));
                       setShowMonthSelect(false);
                     }}
-                    className={`w-full text-left px-5 py-2.5 text-sm hover:bg-white/10 transition-colors ${viewDate.getMonth() === i ? 'text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 font-extrabold' : 'text-zinc-400'}`}
+                    className={`w-full text-left px-5 py-2.5 text-sm hover:bg-slate-100 transition-colors ${viewDate.getMonth() === i ? 'text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 font-extrabold' : 'text-slate-500'}`}
                   >
                     {name}
                   </button>
@@ -119,13 +119,13 @@ export default function CalendarWidget({ onDateSelect, selectedDate }: CalendarW
           <div className="relative" ref={yearRef}>
             <button 
               onClick={() => setShowYearSelect(!showYearSelect)}
-              className="text-lg font-bold text-zinc-500 hover:text-indigo-400 transition-colors flex items-center gap-1"
+              className="text-lg font-bold text-slate-500 hover:text-indigo-400 transition-colors flex items-center gap-1"
             >
               {viewDate.getFullYear()}
               <svg className={`w-4 h-4 transition-transform ${showYearSelect ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
             {showYearSelect && (
-              <div className="absolute top-full left-0 mt-3 w-32 bg-black/90 backdrop-blur-xl border border-white/10 rounded-2xl shadow-[0_0_40px_rgba(0,0,0,0.5)] z-50 py-2 animate-in fade-in slide-in-from-top-2 max-h-48 overflow-y-auto">
+              <div className="absolute top-full left-0 mt-3 w-32 bg-slate-50/90 backdrop-blur-xl border border-slate-200 rounded-2xl shadow-[0_0_40px_rgba(0,0,0,0.5)] z-50 py-2 animate-in fade-in slide-in-from-top-2 max-h-48 overflow-y-auto">
                 {years.map((year) => (
                   <button
                     key={year}
@@ -133,7 +133,7 @@ export default function CalendarWidget({ onDateSelect, selectedDate }: CalendarW
                       setViewDate(new Date(year, viewDate.getMonth(), 1));
                       setShowYearSelect(false);
                     }}
-                    className={`w-full text-left px-5 py-2.5 text-sm hover:bg-white/10 transition-colors ${viewDate.getFullYear() === year ? 'text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 font-extrabold' : 'text-zinc-400'}`}
+                    className={`w-full text-left px-5 py-2.5 text-sm hover:bg-slate-100 transition-colors ${viewDate.getFullYear() === year ? 'text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 font-extrabold' : 'text-slate-500'}`}
                   >
                     {year}
                   </button>
@@ -144,10 +144,10 @@ export default function CalendarWidget({ onDateSelect, selectedDate }: CalendarW
         </div>
 
         <div className="flex gap-2">
-          <button onClick={handlePrevMonth} className="p-2.5 text-zinc-500 hover:text-white hover:bg-white/10 rounded-xl transition-all">
+          <button onClick={handlePrevMonth} className="p-2.5 text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-all">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path></svg>
           </button>
-          <button onClick={handleNextMonth} className="p-2.5 text-zinc-500 hover:text-white hover:bg-white/10 rounded-xl transition-all">
+          <button onClick={handleNextMonth} className="p-2.5 text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-all">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
           </button>
         </div>
@@ -169,7 +169,7 @@ export default function CalendarWidget({ onDateSelect, selectedDate }: CalendarW
             setViewDate(new Date());
             onDateSelect(new Date());
           }}
-          className="text-[11px] text-zinc-500 hover:text-indigo-400 font-medium uppercase tracking-widest transition-colors flex items-center gap-2"
+          className="text-[11px] text-slate-500 hover:text-indigo-400 font-medium uppercase tracking-widest transition-colors flex items-center gap-2"
         >
           <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></span>
           Quick jump to today

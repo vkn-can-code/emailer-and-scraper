@@ -97,7 +97,7 @@ export default function Home() {
       </svg>
     );
 
-    if (subs === 0) return { text: "No Data", color: "text-zinc-400", bg: "bg-zinc-500/10", border: "border-zinc-500/20", icon: <Icon path="M20 12H4" /> };
+    if (subs === 0) return { text: "No Data", color: "text-slate-500", bg: "bg-zinc-500/10", border: "border-zinc-500/20", icon: <Icon path="M20 12H4" /> };
     if (ratio > 0.5) return { text: "Viral Engagement", color: "text-orange-400", bg: "bg-orange-500/10", border: "border-orange-500/20", icon: <Icon path="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" /> };
     if (ratio > 0.1) return { text: "Healthy Growth", color: "text-green-400", bg: "bg-green-500/10", border: "border-green-500/20", icon: <Icon path="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /> };
     if (subs < 10000 && ratio > 0.05) return { text: "Rising Star", color: "text-indigo-400", bg: "bg-indigo-500/10", border: "border-indigo-500/20", icon: <Icon path="M13 10V3L4 14h7v7l9-11h-7z" /> };
@@ -198,31 +198,31 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-transparent text-white flex flex-col relative">
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col relative">
       {/* Navigation Bar */}
-      <nav className="border-b border-white/5 bg-black/40 backdrop-blur-2xl px-8 py-5 flex items-center justify-between sticky top-0 z-50">
+      <nav className="border-b border-slate-200 bg-slate-50 backdrop-blur-2xl px-8 py-5 flex items-center justify-between sticky top-0 z-50">
         <div className="flex items-center gap-10">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(99,102,241,0.4)]">
-              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+              <svg className="w-5 h-5 text-slate-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
             </div>
-            <span className="font-extrabold tracking-tight text-2xl bg-clip-text text-transparent bg-gradient-to-r from-white to-white/60">Email Gen</span>
+            <span className="font-extrabold tracking-tight text-2xl bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700">Email Gen</span>
           </div>
-          <div className="h-6 w-px bg-white/10"></div>
+          <div className="h-6 w-px bg-slate-100"></div>
           <div className="flex items-center gap-8">
-            <Link href="/" className="text-sm font-semibold text-white tracking-wide">Analysis Tool</Link>
-            <Link href="/dashboard" className="text-sm font-medium text-zinc-500 hover:text-white transition-colors tracking-wide">Campaign Dashboard</Link>
+            <Link href="/" className="text-sm font-semibold text-slate-900 tracking-wide">Analysis Tool</Link>
+            <Link href="/dashboard" className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors tracking-wide">Campaign Dashboard</Link>
           </div>
         </div>
-        <button onClick={logout} className="text-[11px] font-bold text-zinc-500 hover:text-white transition-colors uppercase tracking-[0.2em] border border-white/10 px-4 py-2 rounded-full hover:bg-white/5">Sign Out</button>
+        <button onClick={logout} className="text-[11px] font-bold text-slate-500 hover:text-slate-900 transition-colors uppercase tracking-[0.2em] border border-slate-200 px-4 py-2 rounded-full hover:bg-white">Sign Out</button>
       </nav>
 
       <main className="flex-1 max-w-4xl w-full mx-auto p-8 pt-16 relative z-10">
         <header className="mb-16 text-center">
-          <h1 className="text-5xl font-extrabold tracking-tight mb-6 bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60">
+          <h1 className="text-5xl font-extrabold tracking-tight mb-6 bg-clip-text text-transparent bg-gradient-to-b from-slate-900 to-slate-700">
             Channel Analysis Tool
           </h1>
-          <p className="text-zinc-400 max-w-2xl mx-auto leading-relaxed text-lg">
+          <p className="text-slate-500 max-w-2xl mx-auto leading-relaxed text-lg">
             Generate highly-personalized outreach emails for YouTube creators. Paste a single link or a bulk list to get started.
           </p>
         </header>
@@ -231,18 +231,18 @@ export default function Home() {
           <form onSubmit={handleAnalyze} className="space-y-8 animate-fade-in">
             {/* Mode Selection */}
             <div className="flex justify-center">
-              <div className="bg-white/[0.03] p-1.5 rounded-2xl border border-white/5 flex gap-1 shadow-inner backdrop-blur-md">
+              <div className="bg-slate-50/80 p-1.5 rounded-2xl border border-slate-200 flex gap-1 shadow-inner backdrop-blur-md">
                 <button 
                   type="button"
                   onClick={() => setMode('single')}
-                  className={`px-8 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 ${mode === 'single' ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-[0_0_20px_rgba(99,102,241,0.3)]' : 'text-zinc-400 hover:text-white hover:bg-white/5'}`}
+                  className={`px-8 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 ${mode === 'single' ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-[0_0_20px_rgba(99,102,241,0.3)]' : 'text-slate-500 hover:text-slate-900 hover:bg-white'}`}
                 >
                   Single Channel
                 </button>
                 <button 
                   type="button"
                   onClick={() => setMode('bulk')}
-                  className={`px-8 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 ${mode === 'bulk' ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-[0_0_20px_rgba(99,102,241,0.3)]' : 'text-zinc-400 hover:text-white hover:bg-white/5'}`}
+                  className={`px-8 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 ${mode === 'bulk' ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-[0_0_20px_rgba(99,102,241,0.3)]' : 'text-slate-500 hover:text-slate-900 hover:bg-white'}`}
                 >
                   Bulk Analysis
                 </button>
@@ -251,7 +251,7 @@ export default function Home() {
 
             <div className="glass-card p-8 space-y-6">
               <div className="flex items-center justify-between">
-                <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">
+                <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
                   {mode === 'single' ? 'YouTube Channel Link' : 'Bulk Channel Links'}
                 </label>
                 {mode === 'bulk' && (
@@ -261,12 +261,12 @@ export default function Home() {
                         {Object.keys(emailMap).length} emails loaded
                       </span>
                     )}
-                    <label className="flex items-center gap-1.5 text-[10px] text-indigo-400 hover:text-indigo-300 font-bold uppercase tracking-widest cursor-pointer transition-colors">
+                    <label className="flex items-center gap-1.5 text-[10px] text-blue-600 hover:text-blue-700 font-bold uppercase tracking-widest cursor-pointer transition-colors">
                       <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
                       Upload Excel
                       <input type="file" accept=".xlsx,.xls" className="hidden" onChange={handleExcelUpload} />
                     </label>
-                    <span className="text-[10px] text-zinc-600">One URL per line</span>
+                    <span className="text-[10px] text-slate-500">One URL per line</span>
                   </div>
                 )}
               </div>
@@ -279,7 +279,7 @@ export default function Home() {
                     placeholder="https://youtube.com/@MrBeast"
                     value={urls}
                     onChange={(e) => setUrls(e.target.value)}
-                    className="relative w-full bg-black/60 border border-white/10 rounded-2xl px-6 py-5 text-indigo-100 focus:outline-none focus:border-indigo-500/80 transition-all font-mono text-sm placeholder:text-zinc-700 shadow-inner"
+                    className="relative w-full bg-white border border-slate-200 rounded-2xl px-6 py-5 text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all font-mono text-sm placeholder:text-slate-400 shadow-inner"
                   />
                 </div>
               ) : (
@@ -290,32 +290,32 @@ export default function Home() {
                     value={urls}
                     onChange={(e) => setUrls(e.target.value)}
                     rows={8}
-                    className="relative w-full bg-black/60 border border-white/10 rounded-3xl p-6 text-indigo-100 focus:outline-none focus:border-indigo-500/80 transition-all font-mono text-sm placeholder:text-zinc-700 shadow-inner"
+                    className="relative w-full bg-white border border-slate-200 rounded-3xl p-6 text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all font-mono text-sm placeholder:text-slate-400 shadow-inner"
                   />
                 </div>
               )}
 
-              <div className="pt-4 border-t border-white/5 flex items-center justify-between gap-8">
+              <div className="pt-4 border-t border-slate-200 flex items-center justify-between gap-8">
                 <div className="flex-1">
-                  <label className="text-[10px] font-bold text-zinc-600 uppercase tracking-widest block mb-2">AI Model</label>
+                  <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">AI Model</label>
                   <select 
                     value={selectedModel}
                     onChange={(e) => setSelectedModel(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-xs text-white focus:outline-none focus:border-indigo-500 transition-all cursor-pointer"
+                    className="w-full bg-white border border-slate-200 rounded-xl px-4 py-2 text-xs text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all cursor-pointer"
                   >
-                    <option value="openrouter/auto" className="bg-zinc-900 text-white font-bold">OpenRouter (Auto Routing)</option>
-                    <option value="local/ollama" className="bg-indigo-900 text-white font-bold">Local LLM (Ollama)</option>
-                    <option value="openai/gpt-5.5" className="bg-zinc-900 text-white">GPT-5.5 Standard</option>
-                    <option value="openai/gpt-5.5-mini" className="bg-zinc-900 text-white">GPT-5.5 Mini</option>
-                    <option value="openai/gpt-5.4" className="bg-zinc-900 text-white">GPT-5.4 Standard</option>
-                    <option value="openai/gpt-5.4-mini" className="bg-zinc-900 text-white">GPT-5.4 Mini</option>
+                    <option value="openrouter/auto" className="bg-white text-slate-900 font-bold">OpenRouter (Auto Routing)</option>
+                    <option value="local/ollama" className="bg-slate-50 text-slate-900 font-bold">Local LLM (Ollama)</option>
+                    <option value="openai/gpt-5.5" className="bg-white text-slate-900">GPT-5.5 Standard</option>
+                    <option value="openai/gpt-5.5-mini" className="bg-white text-slate-900">GPT-5.5 Mini</option>
+                    <option value="openai/gpt-5.4" className="bg-white text-slate-900">GPT-5.4 Standard</option>
+                    <option value="openai/gpt-5.4-mini" className="bg-white text-slate-900">GPT-5.4 Mini</option>
                   </select>
                 </div>
 
                 <button
                   type="submit"
                   disabled={isAnalyzing}
-                  className="relative flex-[2] group bg-white hover:bg-zinc-100 text-black py-4 rounded-xl font-extrabold transition-all duration-300 shadow-[0_0_40px_rgba(255,255,255,0.1)] hover:shadow-[0_0_40px_rgba(255,255,255,0.2)] active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-3 overflow-hidden"
+                  className="relative flex-[2] group bg-blue-600 hover:bg-blue-700 text-white shadow-md py-4 rounded-xl font-extrabold transition-all duration-300 shadow-[0_0_40px_rgba(255,255,255,0.1)] hover:shadow-[0_0_40px_rgba(255,255,255,0.2)] active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-3 overflow-hidden"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                   {isAnalyzing ? (
@@ -336,26 +336,26 @@ export default function Home() {
         ) : (
           <div className="space-y-8 animate-fade-in">
             {generatedLeads.map((lead, idx) => (
-              <div key={idx} className="glass-card w-full overflow-hidden flex flex-col border-white/10 shadow-2xl animate-fade-in-up" style={{ animationDelay: `${idx * 100}ms` }}>
-                <div className="p-6 border-b border-white/5 flex items-center justify-between bg-white/[0.02]">
+              <div key={idx} className="glass-card w-full overflow-hidden flex flex-col border-slate-200 shadow-2xl animate-fade-in-up" style={{ animationDelay: `${idx * 100}ms` }}>
+                <div className="p-6 border-b border-slate-200 flex items-center justify-between bg-slate-50/50">
                   <div className="flex items-center gap-4">
-                    <img src={lead.avatar || ''} className="w-12 h-12 rounded-xl border border-white/10" alt="" />
+                    <img src={lead.avatar || ''} className="w-12 h-12 rounded-xl border border-slate-200" alt="" />
                     <div>
-                      <h2 className="text-xl font-bold text-white leading-none">{lead.name}</h2>
-                      <p className="text-zinc-500 text-xs mt-1">Generated Outreach Draft</p>
+                      <h2 className="text-xl font-bold text-slate-900 leading-none">{lead.name}</h2>
+                      <p className="text-slate-500 text-xs mt-1">Generated Outreach Draft</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="p-8 space-y-8 bg-black/40">
+                <div className="p-8 space-y-8 bg-slate-50">
                   <div className="space-y-6">
                     <div className="space-y-3">
                       <div className="flex items-center justify-between">
-                        <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Email Subject</label>
+                        <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Email Subject</label>
                         {editingLeadId !== lead.id && (
                           <button 
                             onClick={() => copyToClipboard(lead.emailSubject || '', 'Subject')}
-                            className="text-[10px] text-indigo-400 hover:text-indigo-300 font-bold uppercase transition-colors"
+                            className="text-[10px] text-blue-600 hover:text-blue-700 font-bold uppercase transition-colors"
                           >
                             Copy
                           </button>
@@ -366,10 +366,10 @@ export default function Home() {
                           type="text" 
                           value={editSubject}
                           onChange={(e) => setEditSubject(e.target.value)}
-                          className="w-full p-4 bg-white/5 border border-white/20 rounded-xl text-white font-medium focus:outline-none focus:border-indigo-500 transition-colors"
+                          className="w-full p-4 bg-white border border-slate-300 rounded-xl text-slate-900 font-medium focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-colors"
                         />
                       ) : (
-                        <div className="p-4 bg-white/5 border border-white/10 rounded-xl text-white font-medium">
+                        <div className="p-4 bg-white border border-slate-200 rounded-xl text-slate-900 font-medium">
                           {lead.emailSubject}
                         </div>
                       )}
@@ -377,11 +377,11 @@ export default function Home() {
 
                     <div className="space-y-3">
                       <div className="flex items-center justify-between">
-                        <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Email Body</label>
+                        <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Email Body</label>
                         {editingLeadId !== lead.id && (
                           <button 
                             onClick={() => copyToClipboard(lead.emailBody || '', 'Body')}
-                            className="text-[10px] text-indigo-400 hover:text-indigo-300 font-bold uppercase transition-colors"
+                            className="text-[10px] text-blue-600 hover:text-blue-700 font-bold uppercase transition-colors"
                           >
                             Copy Body
                           </button>
@@ -392,10 +392,10 @@ export default function Home() {
                           value={editBody}
                           onChange={(e) => setEditBody(e.target.value)}
                           rows={10}
-                          className="w-full p-6 bg-white/5 border border-white/20 rounded-xl text-zinc-300 text-sm leading-relaxed font-sans focus:outline-none focus:border-indigo-500 transition-colors"
+                          className="w-full p-6 bg-white border border-slate-300 rounded-xl text-slate-700 text-sm leading-relaxed font-sans focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-colors"
                         />
                       ) : (
-                        <div className="p-6 bg-white/5 border border-white/10 rounded-xl text-zinc-300 text-sm leading-relaxed whitespace-pre-wrap font-sans">
+                        <div className="p-6 bg-white border border-slate-200 rounded-xl text-slate-700 text-sm leading-relaxed whitespace-pre-wrap font-sans">
                           {lead.emailBody}
                         </div>
                       )}
@@ -407,14 +407,14 @@ export default function Home() {
                       <>
                         <button 
                           onClick={() => setEditingLeadId(null)}
-                          className="px-6 py-2 bg-transparent hover:bg-white/5 border border-white/10 text-white rounded-lg text-sm font-bold transition-all"
+                          className="px-6 py-2 bg-transparent hover:bg-white border border-slate-200 text-slate-900 rounded-lg text-sm font-bold transition-all"
                         >
                           Cancel
                         </button>
                         <button 
                           onClick={() => handleSaveEdit(lead.id)}
                           disabled={isSaving}
-                          className="px-6 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-sm font-bold transition-all disabled:opacity-50"
+                          className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-bold transition-all disabled:opacity-50"
                         >
                           {isSaving ? 'Saving...' : 'Save Changes'}
                         </button>
@@ -423,7 +423,7 @@ export default function Home() {
                       <>
                         <button 
                           onClick={() => handleEditToggle(lead)}
-                          className="px-6 py-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-lg text-sm font-bold transition-all flex items-center gap-2"
+                          className="px-6 py-2 bg-white hover:bg-slate-100 border border-slate-200 text-slate-900 rounded-lg text-sm font-bold transition-all flex items-center gap-2"
                         >
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                           Edit Email
@@ -431,7 +431,7 @@ export default function Home() {
                         <button 
                           onClick={() => handleRegenerate(lead.id)}
                           disabled={isRegeneratingId === lead.id}
-                          className="px-6 py-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-lg text-sm font-bold transition-all flex items-center gap-2 disabled:opacity-50"
+                          className="px-6 py-2 bg-white hover:bg-slate-100 border border-slate-200 text-slate-900 rounded-lg text-sm font-bold transition-all flex items-center gap-2 disabled:opacity-50"
                         >
                           {isRegeneratingId === lead.id ? 'Regenerating...' : (
                             <>
@@ -445,22 +445,22 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="p-6 border-t border-white/5 bg-white/[0.02] flex items-center justify-between">
+                <div className="p-6 border-t border-slate-200 bg-slate-50/50 flex items-center justify-between">
                   <div className="flex items-center gap-8 w-full">
                     <div className="flex items-center gap-6">
                       <div className="text-center">
-                        <p className="text-[10px] text-zinc-500 uppercase font-bold tracking-widest">Subs</p>
-                        <p className="text-sm text-white font-mono">{lead.subscriberCount}</p>
+                        <p className="text-[10px] text-slate-500 uppercase font-bold tracking-widest">Subs</p>
+                        <p className="text-sm text-slate-900 font-mono">{lead.subscriberCount}</p>
                       </div>
-                      <div className="w-px h-8 bg-white/10"></div>
+                      <div className="w-px h-8 bg-slate-100"></div>
                       <div className="text-center">
-                        <p className="text-[10px] text-zinc-500 uppercase font-bold tracking-widest">Total Views</p>
-                        <p className="text-sm text-white font-mono">{lead.viewCount}</p>
+                        <p className="text-[10px] text-slate-500 uppercase font-bold tracking-widest">Total Views</p>
+                        <p className="text-sm text-slate-900 font-mono">{lead.viewCount}</p>
                       </div>
-                      <div className="w-px h-8 bg-white/10"></div>
+                      <div className="w-px h-8 bg-slate-100"></div>
                       <div className="text-center">
-                        <p className="text-[10px] text-zinc-500 uppercase font-bold tracking-widest">Avg. Views / Video</p>
-                        <p className="text-sm text-white font-mono">
+                        <p className="text-[10px] text-slate-500 uppercase font-bold tracking-widest">Avg. Views / Video</p>
+                        <p className="text-sm text-slate-900 font-mono">
                           {Math.round((parseInt((lead.viewCount || '0').toString().replace(/,/g, '')) || 0) / (parseInt((lead.videoCount || '1').toString().replace(/,/g, '')) || 1)).toLocaleString()}
                         </p>
                       </div>
@@ -482,13 +482,13 @@ export default function Home() {
             <div className="flex justify-center mt-12 space-x-4">
               <button 
                 onClick={() => setGeneratedLeads([])}
-                className="px-8 py-3 bg-white/5 hover:bg-white/10 text-white rounded-xl font-bold transition-all border border-white/10"
+                className="px-8 py-3 bg-white hover:bg-slate-100 text-slate-900 rounded-xl font-bold transition-all border border-slate-200"
               >
                 Analyze More
               </button>
               <Link 
                 href="/dashboard"
-                className="px-8 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold transition-all shadow-lg shadow-indigo-500/20"
+                className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold transition-all shadow-lg shadow-indigo-500/20"
               >
                 Go to Campaign Dashboard
               </Link>
@@ -498,8 +498,8 @@ export default function Home() {
 
       </main>
 
-      <footer className="p-8 text-center border-t border-white/5 mt-auto">
-        <p className="text-zinc-700 text-[10px] uppercase font-bold tracking-[0.2em]">Automated Outreach v2.0</p>
+      <footer className="p-8 text-center border-t border-slate-200 mt-auto">
+        <p className="text-slate-400 text-[10px] uppercase font-bold tracking-[0.2em]">Automated Outreach v2.0</p>
       </footer>
     </div>
   );

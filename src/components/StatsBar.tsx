@@ -35,19 +35,19 @@ export default function StatsBar({ channels }: StatsBarProps) {
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
       <div className="glass-card p-8 flex flex-col justify-center relative overflow-hidden group">
         <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-        <span className="text-zinc-500 text-[11px] font-bold uppercase tracking-[0.2em] mb-3 relative z-10">Total Drafts</span>
-        <span className="text-5xl font-extrabold tracking-tight text-white leading-none relative z-10">{totalLeads}</span>
+        <span className="text-slate-500 text-[11px] font-bold uppercase tracking-[0.2em] mb-3 relative z-10">Total Drafts</span>
+        <span className="text-5xl font-extrabold tracking-tight text-slate-900 leading-none relative z-10">{totalLeads}</span>
       </div>
       
       <div className="glass-card p-8 flex flex-col justify-center relative overflow-hidden group">
         <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-        <span className="text-zinc-500 text-[11px] font-bold uppercase tracking-[0.2em] mb-3 relative z-10">Network Size (Subs)</span>
+        <span className="text-slate-500 text-[11px] font-bold uppercase tracking-[0.2em] mb-3 relative z-10">Network Size (Subs)</span>
         <span className="text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400 leading-none relative z-10">{formatNumber(totalSubs)}+</span>
       </div>
 
       <div className="glass-card p-8 flex flex-col justify-center relative overflow-hidden group">
         <div className="absolute inset-0 bg-gradient-to-br from-pink-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-        <span className="text-zinc-500 text-[11px] font-bold uppercase tracking-[0.2em] mb-3 relative z-10">Avg. Engagement</span>
+        <span className="text-slate-500 text-[11px] font-bold uppercase tracking-[0.2em] mb-3 relative z-10">Avg. Engagement</span>
         <span className="text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-pink-400 to-rose-400 leading-none relative z-10">{avgEngagement}%</span>
       </div>
     </div>
