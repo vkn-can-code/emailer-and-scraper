@@ -349,6 +349,23 @@ export default function Home() {
 
                 <div className="p-8 space-y-8 bg-slate-50">
                   <div className="space-y-6">
+                    {lead.email && (
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between">
+                          <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Scraped Email Address</label>
+                          <button 
+                            onClick={() => copyToClipboard(lead.email || '', 'Email Address')}
+                            className="text-[10px] text-blue-600 hover:text-blue-700 font-bold uppercase transition-colors"
+                          >
+                            Copy
+                          </button>
+                        </div>
+                        <div className="p-4 bg-white border border-slate-200 rounded-xl text-slate-900 font-medium">
+                          <a href={`mailto:${lead.email}`} className="text-blue-600 hover:underline">{lead.email}</a>
+                        </div>
+                      </div>
+                    )}
+
                     <div className="space-y-3">
                       <div className="flex items-center justify-between">
                         <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Email Subject</label>

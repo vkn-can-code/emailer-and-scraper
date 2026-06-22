@@ -42,6 +42,8 @@ export async function GET(req: NextRequest) {
   }
 }
 
+import { scrapeEmailFromUrl, scrapeEmailsFromText } from '@/lib/scraper';
+
 export async function POST(req: NextRequest) {
   try {
     const user = await getUserFromRequest(req);
@@ -96,7 +98,22 @@ export async function POST(req: NextRequest) {
         }, model || "openrouter/auto");
 
         // Find email from emailMap (match by URL or channel name)
-        const channelEmail = emails[url] || emails[url.trim()] || emails[channelData.name] || null;
+        let channelEmail = emails[url] || emails[url.trim()] || emails[channelData.name] || null;
+
+        // Attempt advanced scraper fallback
+        if (!channelEmail && channelData.description) {
+          const descEmails = scrapeEmailsFromText(channelData.description);
+          if (descEmails.length > 0) {
+            channelEmail = descEmails[0];
+          }
+        }
+
+        if (!channelEmail) {
+          const scrapedEmail = await scrapeEmailFromUrl(url);
+          if (scrapedEmail) {
+            channelEmail = scrapedEmail;
+          }
+        }
 
         const lead = await (prisma.channel as any).create({
           data: {

@@ -7,6 +7,7 @@ export interface YouTubeChannelData {
   subscriberCount: string;
   viewCount: string;
   videoCount: string;
+  description?: string;
 }
 
 export async function fetchChannelData(input: string): Promise<YouTubeChannelData | null> {
@@ -55,6 +56,7 @@ export async function fetchChannelData(input: string): Promise<YouTubeChannelDat
         subscriberCount: item.statistics.subscriberCount,
         viewCount: item.statistics.viewCount,
         videoCount: item.statistics.videoCount,
+        description: item.snippet.description,
       };
     }
   } catch (error) {
