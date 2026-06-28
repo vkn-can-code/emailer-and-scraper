@@ -61,11 +61,20 @@ export async function scrapeEmailFromUrl(url: string, timeoutMs = 15000): Promis
 
 export function scrapeEmailsFromText(text: string): string[] {
   if (!text) return [];
-  // Advanced regex for email extraction
-  const emailRegex = /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g;
+  // Advanced regex for email extraction including obfuscated forms
+  // e.g., name@domain.com, name [at] domain [dot] com, name(at)domain.com
+  const emailRegex = /\b([a-zA-Z0-9._%+-]+(?:\s*(?:\[at\]|\(at\)|@)\s*)[a-zA-Z0-9.-]+(?:\s*(?:\[dot\]|\(dot\)|\.)\s*)[a-zA-Z]{2,6})\b/gi;
   const matches = text.match(emailRegex);
   if (!matches) return [];
   
+  // Clean up obfuscated emails
+  const cleaned = matches.map(m => {
+    return m
+      .replace(/\s*(?:\[at\]|\(at\))\s*/gi, '@')
+      .replace(/\s*(?:\[dot\]|\(dot\))\s*/gi, '.')
+      .replace(/\s+/g, '');
+  });
+  
   // Deduplicate and return
-  return Array.from(new Set(matches));
+  return Array.from(new Set(cleaned));
 }
