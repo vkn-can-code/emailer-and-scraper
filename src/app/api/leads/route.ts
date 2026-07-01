@@ -62,81 +62,91 @@ export async function POST(req: NextRequest) {
     }
 
     const results = [];
+    
+    // Process in batches of 10 to avoid serverless timeouts (524 error)
+    const BATCH_SIZE = 10;
+    for (let i = 0; i < urls.length; i += BATCH_SIZE) {
+      const batch = urls.slice(i, i + BATCH_SIZE);
+      
+      const batchPromises = batch.map(async (url) => {
+        try {
+          const channelData = await fetchChannelData(url);
+          if (!channelData) return null;
 
-    for (const url of urls) {
-      try {
-        const channelData = await fetchChannelData(url);
-        if (!channelData) continue;
+          const subsNum = parseCompactNumber(channelData.subscriberCount);
+          const viewsNum = parseCompactNumber(channelData.viewCount);
+          const videosNum = parseCompactNumber(channelData.videoCount);
+          
+          const avgViews = calculateAverageViews(viewsNum, videosNum);
+          const engagementScore = calculateEngagementRatio(viewsNum, subsNum, videosNum);
+          
+          // Determine Tier
+          let tier = 'C';
+          let score = 30;
+          
+          if (subsNum > 1000000) { tier = 'S'; score = 95; }
+          else if (subsNum > 100000) { tier = 'A'; score = 85; }
+          else if (subsNum > 10000) { tier = 'B'; score = 65; }
 
-        const subsNum = parseCompactNumber(channelData.subscriberCount);
-        const viewsNum = parseCompactNumber(channelData.viewCount);
-        const videosNum = parseCompactNumber(channelData.videoCount);
-        
-        const avgViews = calculateAverageViews(viewsNum, videosNum);
-        const engagementScore = calculateEngagementRatio(viewsNum, subsNum, videosNum);
-        
-        // Determine Tier
-        let tier = 'C';
-        let score = 30;
-        
-        if (subsNum > 1000000) { tier = 'S'; score = 95; }
-        else if (subsNum > 100000) { tier = 'A'; score = 85; }
-        else if (subsNum > 10000) { tier = 'B'; score = 65; }
-
-        if (filterTier && filterTier !== 'All') {
-          if (filterTier === 'S' && tier !== 'S') continue;
-          if (filterTier === 'A' && tier !== 'S' && tier !== 'A') continue;
-        }
-
-        const email = await generateOutreachEmail({
-          name: channelData.name,
-          subscriberCount: formatCompactNumber(subsNum),
-          viewCount: channelData.viewCount,
-          videoCount: channelData.videoCount,
-          averageViewsPerVideo: formatCompactNumber(avgViews),
-          engagementScore: engagementScore
-        }, model || "openrouter/auto");
-
-        // Find email from emailMap (match by URL or channel name)
-        let channelEmail = emails[url] || emails[url.trim()] || emails[channelData.name] || null;
-
-        // Attempt advanced scraper fallback
-        if (!channelEmail && channelData.description) {
-          const descEmails = scrapeEmailsFromText(channelData.description);
-          if (descEmails.length > 0) {
-            channelEmail = descEmails[0];
+          if (filterTier && filterTier !== 'All') {
+            if (filterTier === 'S' && tier !== 'S') return null;
+            if (filterTier === 'A' && tier !== 'S' && tier !== 'A') return null;
           }
-        }
 
-        if (!channelEmail) {
-          const scrapedEmail = await scrapeEmailFromUrl(url);
-          if (scrapedEmail) {
-            channelEmail = scrapedEmail;
-          }
-        }
-
-        const lead = await (prisma.channel as any).create({
-          data: {
-            userId: user.id,
+          const email = await generateOutreachEmail({
             name: channelData.name,
-            handle: channelData.handle,
-            avatar: channelData.avatar,
-            subscriberCount: channelData.subscriberCount,
+            subscriberCount: formatCompactNumber(subsNum),
             viewCount: channelData.viewCount,
             videoCount: channelData.videoCount,
-            leadScore: score,
-            tier: tier,
-            emailSubject: email.subject,
-            emailBody: email.body,
-            email: channelEmail,
-            status: 'completed'
-          }
-        });
+            averageViewsPerVideo: formatCompactNumber(avgViews),
+            engagementScore: engagementScore
+          }, model || "openrouter/auto");
 
-        results.push(lead);
-      } catch (err) {
-        console.error(`Error processing URL ${url}:`, err);
-      }
+          // Find email from emailMap (match by URL or channel name)
+          let channelEmail = emails[url] || emails[url.trim()] || emails[channelData.name] || null;
+
+          // Attempt advanced scraper fallback
+          if (!channelEmail && channelData.description) {
+            const descEmails = scrapeEmailsFromText(channelData.description);
+            if (descEmails.length > 0) {
+              channelEmail = descEmails[0];
+            }
+          }
+
+          if (!channelEmail) {
+            const scrapedEmail = await scrapeEmailFromUrl(url, 8000); // 8 second timeout instead of 15s
+            if (scrapedEmail) {
+              channelEmail = scrapedEmail;
+            }
+          }
+
+          const lead = await (prisma.channel as any).create({
+            data: {
+              userId: user.id,
+              name: channelData.name,
+              handle: channelData.handle,
+              avatar: channelData.avatar,
+              subscriberCount: channelData.subscriberCount,
+              viewCount: channelData.viewCount,
+              videoCount: channelData.videoCount,
+              leadScore: score,
+              tier: tier,
+              emailSubject: email.subject,
+              emailBody: email.body,
+              email: channelEmail,
+              status: 'completed'
+            }
+          });
+
+          return lead;
+        } catch (err) {
+          console.error(`Error processing URL ${url}:`, err);
+          return null;
+        }
+      });
+      
+      const batchResults = await Promise.all(batchPromises);
+      results.push(...batchResults.filter(Boolean));
     }
 
     return NextResponse.json({ success: true, count: results.length, data: results });
