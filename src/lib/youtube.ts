@@ -20,8 +20,40 @@ export async function fetchChannelData(input: string): Promise<YouTubeChannelDat
   try {
     let channelId = '';
     
-    // Check if it's a channel ID directly in URL
-    if (input.includes('youtube.com/channel/')) {
+    // Check if it's a video link
+    let videoId = '';
+    if (input.includes('youtube.com/watch')) {
+      const urlString = input.startsWith('http') ? input : `https://${input}`;
+      try {
+        const urlObj = new URL(urlString);
+        videoId = urlObj.searchParams.get('v') || '';
+      } catch (e) {
+        // Fallback if URL parsing fails
+        if (input.includes('?v=')) {
+          videoId = input.split('?v=')[1].split('&')[0];
+        }
+      }
+    } else if (input.includes('youtu.be/')) {
+      videoId = input.split('youtu.be/')[1].split('?')[0];
+    }
+
+    if (videoId) {
+      // Fetch video details to get the channel ID
+      const videoUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${apiKey}`;
+      const videoRes = await fetch(videoUrl);
+      const videoData = await videoRes.json();
+      
+      if (videoData.error) {
+        console.error("YouTube API Video Error:", videoData.error.message);
+        return null;
+      }
+      
+      if (videoData.items && videoData.items.length > 0) {
+        channelId = videoData.items[0].snippet.channelId;
+      } else {
+        return null; // Video not found
+      }
+    } else if (input.includes('youtube.com/channel/')) {
       channelId = input.split('channel/')[1].split('/')[0].split('?')[0];
     } else {
       // It's a handle (@name) or a username
