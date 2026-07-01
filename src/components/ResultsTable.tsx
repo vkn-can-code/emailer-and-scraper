@@ -229,21 +229,26 @@ export default function ResultsTable({ channels, onDelete, onUpdate }: ResultsTa
             <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent"></div>
 
             <div className="p-6 border-b border-slate-200 flex items-center justify-between bg-slate-50/50">
-              <div className="flex items-center gap-5">
+              <a 
+                href={selectedChannel.handle ? `https://youtube.com/${selectedChannel.handle.startsWith('@') ? selectedChannel.handle : '@' + selectedChannel.handle}` : `https://youtube.com/results?search_query=${encodeURIComponent(selectedChannel.name)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-5 hover:opacity-80 transition-opacity cursor-pointer group"
+              >
                 <div className="relative w-14 h-14 flex-shrink-0">
                   <Image
                     src={selectedChannel.avatar || ''}
                     alt={selectedChannel.name}
                     fill
                     sizes="56px"
-                    className="rounded-2xl border border-slate-200 object-cover shadow-lg"
+                    className="rounded-2xl border border-slate-200 object-cover shadow-lg group-hover:shadow-xl transition-shadow"
                   />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">{selectedChannel.name}</h2>
+                  <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight group-hover:text-blue-600 transition-colors">{selectedChannel.name}</h2>
                   <p className="text-slate-500 text-sm mt-0.5">Generated Outreach Draft</p>
                 </div>
-              </div>
+              </a>
               <button
                 onClick={() => setSelectedChannel(null)}
                 className="text-slate-500 hover:text-slate-900 transition-colors"

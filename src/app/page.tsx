@@ -338,13 +338,18 @@ export default function Home() {
             {generatedLeads.map((lead, idx) => (
               <div key={idx} className="glass-card w-full overflow-hidden flex flex-col border-slate-200 shadow-2xl animate-fade-in-up" style={{ animationDelay: `${idx * 100}ms` }}>
                 <div className="p-6 border-b border-slate-200 flex items-center justify-between bg-slate-50/50">
-                  <div className="flex items-center gap-4">
-                    <img src={lead.avatar || ''} className="w-12 h-12 rounded-xl border border-slate-200" alt="" />
+                  <a 
+                    href={lead.handle ? `https://youtube.com/${lead.handle.startsWith('@') ? lead.handle : '@' + lead.handle}` : `https://youtube.com/results?search_query=${encodeURIComponent(lead.name)}`} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-4 hover:opacity-80 transition-opacity cursor-pointer group"
+                  >
+                    <img src={lead.avatar || ''} className="w-12 h-12 rounded-xl border border-slate-200 group-hover:shadow-md transition-shadow" alt="" />
                     <div>
-                      <h2 className="text-xl font-bold text-slate-900 leading-none">{lead.name}</h2>
+                      <h2 className="text-xl font-bold text-slate-900 leading-none group-hover:text-blue-600 transition-colors">{lead.name}</h2>
                       <p className="text-slate-500 text-xs mt-1">Generated Outreach Draft</p>
                     </div>
-                  </div>
+                  </a>
                 </div>
 
                 <div className="p-8 space-y-8 bg-slate-50">
